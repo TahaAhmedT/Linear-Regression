@@ -1,6 +1,6 @@
 from src.cost.cost_and_deriv import cost, cost_derivative
 from src.utils.data_utils import load_data
-from src.utils.visualize_utils import visualize_weights, line_plot
+from src.utils.visualize_utils import visualize_weights, line_plot, feature_vs_target
 
 import numpy as np
 from numpy.linalg import norm
@@ -90,9 +90,29 @@ def optimizing_hyperparams():
     print(f"The Program with this Configuration Stops at number of Iteration = {history[min_cost][0]}")
     print(f"Best Weights: {history[min_cost][3]}")
 
+
+def one_feature_regression(): 
+    x, t, cols_names = load_data() 
+
+    for i in range(x.shape[1]): 
+        print(f"Working On Feature: {cols_names[i]}") 
+        feature = x[:, i].reshape(-1, 1)   # make it 2D
+        feature = np.hstack([np.ones((feature.shape[0], 1)), feature]) 
+        feature_vs_target(feature[:, 1], t, 
+                          title=f"{cols_names[i]} VS price", 
+                          xlabel=f"x: {cols_names[i]}", 
+                          ylabel="y: price") 
+
+        weights = np.array([1.0, 1.0]) 
+        gradient_descent(cost_derivative, feature, t, weights, 
+                         step_size=0.001, precision=0.00001, max_iter=10000)
+
+
+
 if __name__ == "__main__":
     # simple_trial()
     # train_linear()
-    optimizing_hyperparams()
+    # optimizing_hyperparams()
+    one_feature_regression()
 
 # run file: python -m src.linear_regression.gradient_descent_linear_regression
