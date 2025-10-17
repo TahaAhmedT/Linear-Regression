@@ -20,17 +20,24 @@ def visualize_weights(x, t, w):
 
 
 def line_plot(iters: list, cost: list, title: str = "", xlabel: str = "", ylabel: str = ""):
-    """
-    Plots line graphs for the provided data and saves the figure.
-    """
     plt.figure(figsize=(8, 6))
     plt.plot(iters, cost, linewidth=2)
 
     plt.title(title, fontsize=14)
     plt.xlabel(xlabel, fontsize=12)
     plt.ylabel(ylabel, fontsize=12)
-    plt.legend()
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.tight_layout()
 
     plt.show()
+
+
+def feature_vs_target(feature, target, title: str="", xlabel: str="", ylabel: str=""):
+    plt.figure(figsize=(8, 6))
+    plt.scatter(feature, target)
+    plt.title(title, fontsize=14)
+    plt.xlabel(xlabel, fontsize=12)
+    plt.ylabel(ylabel, fontsize=12)
+
+    plt.show()
+
